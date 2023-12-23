@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mywebapp
+spec:
+  selector:
+    matchLabels:
+      app: mywebapp
+      name: mywebapp
+  replicas: 0    
+  template:
+    metadata:
+      labels:
+        app: mywebapp
+        name: mywebapp
+    spec:
+      containers:
+      - name: mywebapp
+        image: nginxdemos/hello
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
