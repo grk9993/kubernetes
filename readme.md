@@ -7,3 +7,5 @@
 
  k set image deploy/mydeployment hello=nginxdemos/hello
  k rollout history  deployment mydeployment
+
+ k get nodes -o custom-columns=NODE_NAME:.metadata.name,TAINTS:.spec.taints
