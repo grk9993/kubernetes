@@ -1,3 +1,12 @@
+# This code sets up an alias 'k' for the 'kubectl' command.
+- `alias k=kubectl`
+
+# This code sets up autocompletion for the 'k' alias using the __start_kubectl function.
+- `complete -o default -F __start_kubectl k`
+
+# Set Current Context Namespace
+- `k config set-context --current --namespace=my-ns`
+
 # Creates a deployment with nginxdemos/hello image and 3 replicas.
 - `k create deploy mydeployment --image=nginxdemos/hello --replicas=3`
 
@@ -6,6 +15,10 @@
 
 # Creates a NodePort service with port mapping and node port specified.
 - `k create svc nodeport mydeployment --tcp=80:80 --node-port=30009 --dry-run=client -o yaml`
+
+# This command replaces a Kubernetes pod using the specified JSON file.
+# It forces the replacement, even if the pod is not ready for termination.
+- `k replace --force -f ./pod.json`
 
 # Creates a ConfigMap with username and password literals.
 - `k create cm webConfigmap --from-literal=username='myuser' --from-literal=password='pswd' -o yaml --dry-run=client`
@@ -33,3 +46,6 @@
 
 # Drains the node by evicting all pods except daemonsets.
 - `k drain --ignore-daemonsets docker-desktop`
+
+kubectl cordon my-node 
+kubectl api-resources
