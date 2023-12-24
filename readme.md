@@ -9,3 +9,5 @@
  k rollout history  deployment mydeployment
 
  k get nodes -o custom-columns=NODE_NAME:.metadata.name,TAINTS:.spec.taints
+ k taint nodes docker-desktop my-key=my-value:NoSchedule
+ k taint nodes docker-desktop my-key=my-value:NoSchedule-
