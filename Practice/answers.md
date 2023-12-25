@@ -56,3 +56,12 @@ A:
 5. `k exec dnslookup -- nslookup 10-1-0-67.default.pod.cluster.local > /root/web-pod.pod`
 
 Explanation: This set of commands creates a pod named `web-pod` using the `nginx` image. It then exposes the pod internally by creating a service named `web-pod-svc` with port 80. Additionally, a separate pod named `dnslookup` is created using the `busybox:1.28` image to perform DNS lookups. The results of the DNS lookups for `web-pod-svc` and `10-1-0-67.default.pod.cluster.local` are recorded in the files `/root/web-svc.svc` and `/root/web-pod.pod`, respectively.
+
+## Q: Use JSON Path query to get OSImages of all nodes and store it in file /root/osimages.txt
+Note: The OSImages are under nodeInfo section under status of each node
+
+A: `k get nodes -o jsonpath='{ .items[].status.nodeInfo.osImage}' >/root/osimages.txt`
+
+Explanation:
+The command uses `kubectl` to get information about all nodes. The `-o jsonpath` option is used to specify the output format and the JSON Path query to extract the required information. The JSON Path query `{ .items[].status.nodeInfo.osImage}` navigates through each node's status to the `nodeInfo` section and retrieves the `osImage` value. The `>` operator is used to redirect the output into the file `/root/osimages.txt`.
+
