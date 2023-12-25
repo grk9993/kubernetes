@@ -30,10 +30,10 @@ Explanation: This command creates a pod named `delta-pod` in the `defense` names
 
 ---
 
-## Q: Create a pod named admin-pod with image busybox, which should sleep for 3200. Also, give permission for system creationTimestamp.
+## Q: Create a pod named admin-pod with image busybox, which should sleep for 3200. Also, give permission for setting system time.
 A: See `admin-pod.yaml` for an example.
 
-Explanation: To create a pod named `admin-pod` with the image `busybox` and a sleep duration of 3200 seconds, you can refer to the `admin-pod.yaml` file for an example configuration. The `admin-pod.yaml` file will contain the necessary specifications to define the pod, including the sleep duration. Giving permission for system `creationTimestamp` is not required as it is automatically assigned by the system.
+Explanation: To create a pod named `admin-pod` with the image `busybox` and a sleep duration of 3200 seconds, you can refer to the `admin-pod.yaml` file for an example configuration. The `admin-pod.yaml` file will contain the necessary specifications to define the pod, including the sleep duration. Giving permission for setting the system time is done by adding the `SYS_TIME` capability.
 
 ---
 
