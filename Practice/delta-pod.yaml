@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    dev: env
+    tier: front
+  name: delta-pod
+  namespace: defense
+spec:
+  containers:
+  - image: nginx:1.17
+    name: delta-pod
