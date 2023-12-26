@@ -78,10 +78,11 @@ Explanation: To create a Persistent Volume (PV) with the given specifications, y
 ## Q: List all InternalIP of all the nodes and store the output in internal_IP.txt file
 Note: All IPs should be in a single line separated by space
 
-A:  k get nodes -o jsonpath='{.items[*].status.addresses[?(@.type=="InternalIP")].address}' > internal_IP.txt
+A: `k get nodes -o jsonpath='{.items[*].status.addresses[?(@.type=="InternalIP")].address}' > internal_IP.txt`
 
 Explanation: 
 This command retrieves the InternalIP addresses of all nodes in the cluster using the `kubectl get nodes` command. The `-o jsonpath` option is used to specify the output format and the JSON Path query `{.items[*].status.addresses[?(@.type=="InternalIP")].address}` is used to extract the InternalIP addresses. The `>` operator is used to redirect the output into the `internal_IP.txt` file. The InternalIP addresses are stored in a single line, separated by spaces, as specified in the note.
+
 
 ## Q: Create a deployment web-003 scale it to 3 make sure that desired number of pods are always running
 A:  k create deploy web-003 --image=nginx --replicas=3 -o yaml>web-003.yaml
@@ -93,3 +94,35 @@ A:  `k run front-end-helper --image=busybox -it --rm --restart=Never  -- /bin/sh
 
 Explanation: This command creates a pod named `front-end-helper` using the `busybox` image. The pod runs an interactive shell (`/bin/sh`) command to echo the message "Binaries downloaded successfully" and redirects the output to a file named `frontend-helper-log.txt`. The `--rm` flag ensures that the pod is automatically deleted after it completes, and the `--restart=Never` flag prevents the pod from being restarted if it fails or is terminated.
 
+## Q: List all the nodes with taints whose effect is NoSchedule in format Name, Taint value in file custom-columns-cka.log
+A: `k get nodes -o custom-columns="name:{.metadata.name},taints:.spec.taints[?(@.effect=='NoSchedule')].value" >custom-columns-cka.log`
+
+Explanation: This command lists all the nodes with taints whose effect is NoSchedule. The `-o custom-columns` flag is used to specify the output format. The custom column format is defined as `name:{.metadata.name},taints:.spec.taints[?(@.effect=='NoSchedule')].value`, which displays the node name and the value of the taints with the effect NoSchedule. The output is redirected to the file `custom-columns-cka.log`.
+
+## Q: Create a namespace called airfusion,create networkpolicy that allows pods in ns airfusion to receive traffic on port 80 from other pods in same ns but no communication is allowed from outside ns
+A: `k create ns airfusion`
+See `networkPolicy.yaml` for an example.
+Explanation: To create a namespace called `airfusion` and a network policy that allows pods within the `airfusion` namespace to receive traffic on port 80 from other pods within the same namespace, but restricts communication from outside the namespace, you can use the following commands:
+
+1. `k create ns airfusion`: This command creates the `airfusion` namespace.
+2. See `networkPolicy.yaml` for an example: This refers to a YAML file named `networkPolicy.yaml` that contains the configuration for the network policy. The file should define the necessary rules to allow traffic on port 80 within the `airfusion` namespace while blocking communication from outside the namespace.
+
+## Q: Expose a web pod audit-web-app. Name of service should be audit-web-app-service. service should be available on port 30002 on all nodes of cluster
+A:  `k expose pod audit-web-app --type=NodePort --port=80 --target-port=80 -o yaml --dry-run=client > exposePod.yaml`
+After generating file edit it and add nodePort: 30002
+`k apply -f exposePod.yaml`
+
+Explanation: 
+To expose the web pod named `audit-web-app` and create a service named `audit-web-app-service` that is available on port 30002 on all nodes of the cluster, you can use the following steps:
+
+1. Run the command `k expose pod audit-web-app --type=NodePort --port=80 --target-port=80 -o yaml --dry-run=client > exposePod.yaml` to generate a YAML file named `exposePod.yaml` that contains the configuration for the service.
+2. Open the `exposePod.yaml` file and add `nodePort: 30002` under the `spec` section to specify the desired node port.
+3. Apply the modified configuration by running the command `k apply -f exposePod.yaml`.
+
+This will create the service `audit-web-app-service` and expose it on port 30002 on all nodes of the cluster.
+
+## Q: create a pod named prod-pod-nginx with toleration for taint env=prod:NoSchedule
+A: See the details in `tolarations.yaml`.
+
+Explanation: 
+To create a pod named `prod-pod-nginx` with a toleration for the taint `env=prod:NoSchedule`, you can refer to the `tolarations.yaml` file for the detailed configuration. The `tolarations.yaml` file should contain the necessary specifications to define the pod and include the toleration for the specified taint. Tolerations allow pods to be scheduled on nodes with matching taints, in this case, allowing the `prod-pod-nginx` pod to be scheduled on nodes with the `env=prod:NoSchedule` taint.

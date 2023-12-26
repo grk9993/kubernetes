@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: prod-pod-nginx
+  name: prod-pod-nginx
+spec:
+  containers:
+  - image: nginx
+    name: prod-pod-nginx
+  tolerations:
+  - key: "env"
+    operator: "Equal"
+    value: "prod"
+    effect: "NoSchedule"
