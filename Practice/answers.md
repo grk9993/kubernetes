@@ -126,3 +126,16 @@ A: See the details in `tolarations.yaml`.
 
 Explanation: 
 To create a pod named `prod-pod-nginx` with a toleration for the taint `env=prod:NoSchedule`, you can refer to the `tolarations.yaml` file for the detailed configuration. The `tolarations.yaml` file should contain the necessary specifications to define the pod and include the toleration for the specified taint. Tolerations allow pods to be scheduled on nodes with matching taints, in this case, allowing the `prod-pod-nginx` pod to be scheduled on nodes with the `env=prod:NoSchedule` taint.
+
+## Q: Create a pod with the following details:
+- Name: redis-pod
+- runAsUser: 1000
+- runAsGroup: 3000
+- fsGroup: 2000
+- Image: redis:alpine 
+
+A: See the details in `runasuser.yaml`.
+
+Explanation:
+To create a pod named `redis-pod` with the specified configuration, you can refer to the `runasuser.yaml` file for the detailed configuration. The `runasuser.yaml` file should contain the necessary specifications to define the pod, including the `runAsUser`, `runAsGroup`, `fsGroup`, and `image` values. These settings define the user and group IDs under which the pod's containers will run, as well as the file system group ownership and the image to use for the pod.
+
