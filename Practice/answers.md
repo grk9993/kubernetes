@@ -60,8 +60,36 @@ Explanation: This set of commands creates a pod named `web-pod` using the `nginx
 ## Q: Use JSON Path query to get OSImages of all nodes and store it in file /root/osimages.txt
 Note: The OSImages are under nodeInfo section under status of each node
 
-A: `k get nodes -o jsonpath='{ .items[].status.nodeInfo.osImage}' >/root/osimages.txt`
+A: `k get nodes -o jsonpath='{ .items[*].status.nodeInfo.osImage}' >/root/osimages.txt`
 
 Explanation:
 The command uses `kubectl` to get information about all nodes. The `-o jsonpath` option is used to specify the output format and the JSON Path query to extract the required information. The JSON Path query `{ .items[].status.nodeInfo.osImage}` navigates through each node's status to the `nodeInfo` section and retrieves the `osImage` value. The `>` operator is used to redirect the output into the file `/root/osimages.txt`.
+
+## Q: Create Persistant Volume with given specification
+volume name: pv-rnd
+storage: 100Mi
+Access mode: ReadWriteMany
+host-path: /pv/host_data-rnd
+
+A: See `pv-rnd.yaml` for an example.
+
+Explanation: To create a Persistent Volume (PV) with the given specifications, you can refer to the `pv-rnd.yaml` file for an example configuration. The PV is named `pv-rnd` and has a storage capacity of 100Mi. It has an access mode of ReadWriteMany, allowing multiple pods to read and write to it simultaneously. The PV is backed by a host path located at `/pv/host_data-rnd`.
+
+## Q: List all InternalIP of all the nodes and store the output in internal_IP.txt file
+Note: All IPs should be in a single line separated by space
+
+A:  k get nodes -o jsonpath='{.items[*].status.addresses[?(@.type=="InternalIP")].address}' > internal_IP.txt
+
+Explanation: 
+This command retrieves the InternalIP addresses of all nodes in the cluster using the `kubectl get nodes` command. The `-o jsonpath` option is used to specify the output format and the JSON Path query `{.items[*].status.addresses[?(@.type=="InternalIP")].address}` is used to extract the InternalIP addresses. The `>` operator is used to redirect the output into the `internal_IP.txt` file. The InternalIP addresses are stored in a single line, separated by spaces, as specified in the note.
+
+## Q: Create a deployment web-003 scale it to 3 make sure that desired number of pods are always running
+A:  k create deploy web-003 --image=nginx --replicas=3 -o yaml>web-003.yaml
+See the details in `web-003.yaml`.
+Than edit `web-003.yaml` to make `maxUnavailable: 0%`
+
+## Q: Create a pod front-end-helper that writes "Binaries downloaded successfully" in frontend-helper-log.txt and exit. Pod front-end-helper should automatically get deleted after completed
+A:  `k run front-end-helper --image=busybox -it --rm --restart=Never  -- /bin/sh -c 'echo Binary downloaded successfully' > frontend-helper-log.txt`
+
+Explanation: This command creates a pod named `front-end-helper` using the `busybox` image. The pod runs an interactive shell (`/bin/sh`) command to echo the message "Binaries downloaded successfully" and redirects the output to a file named `frontend-helper-log.txt`. The `--rm` flag ensures that the pod is automatically deleted after it completes, and the `--restart=Never` flag prevents the pod from being restarted if it fails or is terminated.
 
