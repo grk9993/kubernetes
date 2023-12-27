@@ -47,5 +47,16 @@
 # Drains the node by evicting all pods except daemonsets.
 - `k drain --ignore-daemonsets docker-desktop`
 
+# If we create a replicaset with same label as a pod the pod will become part of replicaset and pod will be counted in replicas number.
+
+# If you know the value of an element in json and want to get the path to it 
+- `jq -r 'paths (.. | select (. == "v1")) | join (":")' data.json`
+- It will be useful in getting path for jsonpath output for example
+- ` k get node -o json |jq -r 'paths (.. | select (. == "docker-desktop")) | join (":")'`
+
 kubectl cordon my-node 
 kubectl api-resources
+systemctl status kubelet.service
+journalctl -u kubelet
+systemctl deamon-reload
+systemctl restart kubelet

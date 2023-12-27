@@ -7,7 +7,7 @@ Explanation: This command lists all pods in ascending order based on their creat
 
 ## Q: Create a static pod on node01
 A: 
-1. Go to node01 and run `ps -aux | grep kubelet` to get the `config.yaml` file.
+1. Go to node01 and run `ps -aux | grep kubelet` to get the `config.yaml` file(mostly /var/lib/kubelet/config.yaml).
 2. Use `cat` to view the file and search for `staticPod`.
 3. The file is usually located in `/etc/kubernetes/manifests`.
 4. Create a `pod.yaml` file there.
@@ -172,4 +172,20 @@ A: See the details in `pvc-pod.yaml`.
 Explanation:
 To create a Pod named `my-nginx-pod` with the specified configuration, you can refer to the `pvc-pod.yaml` file for the detailed configuration. The `pvc-pod.yaml` file should contain the necessary specifications to define the Pod, including the name, image, volume, and volume mount. The Pod uses the `nginx` image and mounts the `pv-claim-log` PersistentVolumeClaim to the `/log` directory within the Pod's filesystem.
 
+
+
+## Q: Create a pod nginx-k8s using image nginx and Initcontainer git-k8s using image alpine/git
+- mount volume at /usr/share/nginx/html
+- initcontainer should clone and replace index.html for main container present at /usr/share/nginx/html
+- Clone https://github.com/jhawithu/k8s-nginx.git to get index.html
+
+A: See the details in `initContainer.yaml`.
+
+Explanation:
+To create a pod named `nginx-k8s` using the `nginx` image and an init container named `git-k8s` using the `alpine/git` image, follow these steps:
+
+1. Mount a volume at `/usr/share/nginx/html` in the pod.
+2. The init container should clone the repository `https://github.com/jhawithu/k8s-nginx.git` and replace the `index.html` file in the main container's `/usr/share/nginx/html` directory.
+
+For the detailed configuration, refer to the `initContainer.yaml` file.
 
