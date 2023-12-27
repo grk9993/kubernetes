@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  annotations:
+    docker.io/hostpath: /var/lib/k8s-pvs/pv-claim-log/pvc-2c9988c6-bc89-4987-8dd5-95f154ee5b83
+    pv.kubernetes.io/provisioned-by: docker.io/hostpath
+  creationTimestamp: "2023-12-27T07:03:41Z"
+  finalizers:
+  - kubernetes.io/pv-protection
+  name: pvc-2c9988c6-bc89-4987-8dd5-95f154ee5b83
+  resourceVersion: "84574"
+  uid: ad131f39-21b2-4f9e-afac-7786c7f68dd3
+spec:
+  accessModes:
+  - ReadWriteMany
+  capacity:
+    storage: 50Mi
+  claimRef:
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    name: pv-claim-log
+    namespace: default
+    resourceVersion: "84569"
+    uid: 2c9988c6-bc89-4987-8dd5-95f154ee5b83
+  hostPath:
+    path: /var/lib/k8s-pvs/pv-claim-log/pvc-2c9988c6-bc89-4987-8dd5-95f154ee5b83
+    type: ""
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: hostpath
+  volumeMode: Filesystem
+status:
+  phase: Bound

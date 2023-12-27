@@ -139,3 +139,37 @@ A: See the details in `runasuser.yaml`.
 Explanation:
 To create a pod named `redis-pod` with the specified configuration, you can refer to the `runasuser.yaml` file for the detailed configuration. The `runasuser.yaml` file should contain the necessary specifications to define the pod, including the `runAsUser`, `runAsGroup`, `fsGroup`, and `image` values. These settings define the user and group IDs under which the pod's containers will run, as well as the file system group ownership and the image to use for the pod.
 
+## Q: Create a PersistentVolume with following specification:
+- Volume Name : mypvlog
+- Storage: 100Mi
+- Access Modes: ReadWriteMany
+- Host Path : /pv/log
+- Reclaim Policy : Retain
+
+A: See the details in `persistentvolume.yaml`.
+
+Explanation:
+To create a PersistentVolume (PV) with the specified specifications, you can refer to the `persistentvolume.yaml` file for the detailed configuration. The PV is named `mypvlog` and has a storage capacity of 100Mi. It has an access mode of ReadWriteMany, allowing multiple pods to read and write to it simultaneously. The PV is backed by a host path located at `/pv/log`. The reclaim policy is set to Retain, which means that the PV will not be automatically deleted when the corresponding PersistentVolumeClaim (PVC) is deleted.
+
+## Q: Create a PersistentVolumeClaim with following specification:
+- Volume Name : pv-claim-log
+- Storage Request: 50Mi
+- Access Modes: ReadWriteMany
+
+A: See the details in `persistent-volume-claim.yaml`.
+
+Explanation:
+To create a PersistentVolumeClaim (PVC) with the specified specifications, you can refer to the `persistent-volume-claim.yaml` file for the detailed configuration. The PVC is named `pv-claim-log` and requests a storage capacity of 50Mi. It has an access mode of ReadWriteMany, allowing multiple pods to read and write to it simultaneously.
+
+## Q: Create a Pod with the following specification:
+- Name: my-nginx-pod
+- Image: nginx
+- Volume: PersistentVolumeClaim=pv-claim-log
+- Volume Mount: /log
+
+A: See the details in `pvc-pod.yaml`.
+
+Explanation:
+To create a Pod named `my-nginx-pod` with the specified configuration, you can refer to the `pvc-pod.yaml` file for the detailed configuration. The `pvc-pod.yaml` file should contain the necessary specifications to define the Pod, including the name, image, volume, and volume mount. The Pod uses the `nginx` image and mounts the `pv-claim-log` PersistentVolumeClaim to the `/log` directory within the Pod's filesystem.
+
+
