@@ -26,51 +26,47 @@
 
 **1. Print All Lines:**
 
-
-awk '{print}' employee.txt
+- `awk '{print}' employee.txt`
 
 **2. Print Selected Fields:**
 
-
-awk '{print $1, $4}' employee.txt
-awk -F: '{print $1, $5}' /etc/passwd  # Use a colon as the field separator
+- `awk '{print $1, $4}' employee.txt`
+- `awk -F: '{print $1, $5}' /etc/passwd`  # Use a colon as the field separator
 
 **3. Filter Lines Based on a Pattern:**
 
-
-awk '/manager/ {print}' employee.txt
-awk '$3 > 50 {print $1, $3}' data.csv
+- `awk '/manager/ {print}' employee.txt`
+- `awk '$3 > 50 {print $1, $3}' data.csv`
 
 **4. Perform Calculations:**
 
-
-awk '{print $1, $2 * 10}' numbers.txt
-awk '{sum += $2; print $1, sum}' data.csv
+- `awk '{print $1, $2 * 10}' numbers.txt`
+- `awk '{sum += $2; print $1, sum}' data.csv`
 
 **5. Restructure Data:**
 
 
-awk '{print $2, $1}' names.txt  # Swap first and second fields
-awk -F, '{print $1, $3}' addresses.csv  # Print first and third fields, comma-separated
+- `awk '{print $2, $1}' names.txt`  # Swap first and second fields
+- `awk -F, '{print $1, $3}' addresses.csv`  # Print first and third fields, comma-separated
 
 **6. Generate Reports:**
 
 
-awk '{count[$1]++} END {for (name in count) print name, count[name]}' words.txt  # Word frequency count
-awk '{sales += $4} END {print "Total sales:", sales}' sales_data.csv
+- `awk '{count[$1]++} END {for (name in count) print name, count[name]}' words.txt`  # Word frequency count
+- `awk '{sales += $4} END {print "Total sales:", sales}' sales_data.csv`
 
 **7. Combine Patterns and Actions:**
 
 
-awk 'NR > 5 && $2 ~ /error/ {print}' logfile.txt  # Print lines after line 5 containing "error" in the second field
+- `awk 'NR > 5 && $2 ~ /error/ {print}' logfile.txt`  # Print lines after line 5 containing "error" in the second field
 
 **8. Use Built-in Variables and Functions:**
 
 
-awk '{print NR, NF, $0}' data.txt  # Print line number, number of fields, and line
-awk '{print toupper($1), $2}' names.txt  # Capitalize first field
+- `awk '{print NR, NF, $0}' data.txt`  # Print line number, number of fields, and line
+- `awk '{print toupper($1), $2}' names.txt`  # Capitalize first field
 
 **9. Create User-Defined Functions:**
 
 
-awk 'function square(x) {return x * x} {print $1, square($2)}' numbers.txt
+- `awk 'function square(x) {return x * x} {print $1, square($2)}' numbers.txt`
