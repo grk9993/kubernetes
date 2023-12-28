@@ -14,6 +14,8 @@ Taking a BackupTo take a backup of the etcd cluster, you need to perform the fol
       `kubectl get endpoints -n kube-system etcd`
 
     - Backup location: This is the location where you want to store the backup file. For example, `/home/user/etcd-backup.db`.
+- You can find certificate path describing Api-server or etcd pod  
+   `kubectl describe pod etcd-docker-desktop -n kube-system ` 
 - Take the snapshot:
     - Run the following command to take a snapshot of the etcd cluster and save it to the backup location:
 
@@ -21,7 +23,7 @@ Taking a BackupTo take a backup of the etcd cluster, you need to perform the fol
 
     - For example:
 
-    `ETCDCTL_API=3 etcdctl snapshot save /home/user/etcd-backup.db --cacert=/home/user/ca.crt --cert=/home/user/server.crt --key=/home/user/server.key`  
+      `ETCDCTL_API=3 etcdctl snapshot save /home/user/etcd-backup.db --cacert=/home/user/ca.crt --cert=/home/user/server.crt --key=/home/user/server.key`  
 
     - You should see a message like this:
 
@@ -65,23 +67,23 @@ Restoring the BackupTo restore the backup of the etcd cluster, you need to perfo
 
     - You should see a message like this:
 
-    `Starting restore snapshot to initial cluster`
-    `Restoring snapshot to /data/etcd-restored/member/snap/db`
-    `Restored snapshot to /data/etcd-restored/member/snap/db`
+       `Starting restore snapshot to initial cluster`
+       `Restoring snapshot to /data/etcd-restored/member/snap/db`
+       `Restored snapshot to /data/etcd-restored/member/snap/db`
 
 - Start the etcd pods:
     - Run the following command to start the etcd pods on the master node:
 
-    `kubectl apply -f /etc/kubernetes/manifests/etcd.yaml`
+      `kubectl apply -f /etc/kubernetes/manifests/etcd.yaml`
 
     - You should see a message like this:
 
-      `pod/etcd created`
+       `pod/etcd created`
 
 - Verify the restoration:
     - Once the etcd pods are up and running, you can verify the restoration by running the following command:
 
-    `ETCDCTL_API=3 etcdctl get /`
+       `ETCDCTL_API=3 etcdctl get /`
 
     - This should return the contents of the etcd cluster.
 
