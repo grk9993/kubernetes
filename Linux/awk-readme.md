@@ -68,7 +68,7 @@
 
 **10. Get the names and labels of all pods in a namespace:**
 
-- `kubectl get pods -n my-namespace -o awk '{print $1, $NF}'`
+- `kubectl get pods -n my-namespace --show-labels | awk '{print $1, $NF}'`
 
 **11. Get the CPU requests and limits of all containers in a pod:**
 
